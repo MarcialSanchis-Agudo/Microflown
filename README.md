@@ -27,7 +27,7 @@ For each target frequency:
 ---
 
 ## Repository layout
----
+
 mf_pipeline/ ├── mf_config.py # absolute paths (H5 and EXPORTS) ├── mf_fill.py # noisy-sensor detection + interpolation, saves NPZ ├── mf_directivity.py # SH fit + evaluation, polar helpers ├── mf_plots.py # cloud plots and per-point delta plots ├── run_fill.py # CLI step 1 ├── run_cloud_plots.py # CLI step 2 └── run_directivity.py # CLI step 3
 
 ## Install
