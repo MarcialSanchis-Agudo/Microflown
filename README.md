@@ -29,6 +29,9 @@ For each target frequency:
 ## Repository layout
 
 mf_pipeline/ ├── mf_config.py # absolute paths (H5 and EXPORTS) ├── mf_fill.py # noisy-sensor detection + interpolation, saves NPZ ├── mf_directivity.py # SH fit + evaluation, polar helpers ├── mf_plots.py # cloud plots and per-point delta plots ├── run_fill.py # CLI step 1 ├── run_cloud_plots.py # CLI step 2 └── run_directivity.py # CLI step 3
+## Install
+
+---
 
 ## Install
 
@@ -166,7 +169,7 @@ Fit a real SH expansion up to degree `lmax` with Tikhonov regularization (`lambd
 * `filled_arrays_noiseaware_1008Hz_u_mag_delta_series.png`
 * `filled_arrays_noiseaware_1008Hz_u_mag_raw_vs_filled.png`
 * `filled_arrays_noiseaware_1008Hz_u_mag_delta.csv`
-* `filled_arrays_noiseaware_1OPEN_u_mag_directivity.png`
+* `filled_arrays_noiseaware_1008Hz_u_mag_directivity.png`
 * `filled_arrays_noiseaware_1008Hz_u_mag_map_lonlat.npz`
 * `filled_arrays_noiseaware_1008Hz_u_mag_sphere_theta_phi.npz`
 * `filled_arrays_noiseaware_1008Hz_u_mag_polar_horizontal_0deg.png`
