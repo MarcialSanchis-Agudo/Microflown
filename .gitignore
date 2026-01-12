@@ -1,0 +1,23 @@
+# Ignore everything by default
+*
+
+# Allow experiment assets and pipeline code
+!experiment/
+!experiment/**
+
+# Allow pipeline source + scripts only
+!final_pipe/
+!final_pipe/README.md
+!final_pipe/pyproject.toml
+!final_pipe/scripts/
+!final_pipe/scripts/**
+!final_pipe/src/
+!final_pipe/src/**
+
+# Ignore caches
+final_pipe/src/**/__pycache__/
+final_pipe/src/**/*.pyc
+
+# Allow git metadata files
+!.gitignore
+!.gitattributes

@@ -1,0 +1,2 @@
+experiment/data/martial/psd/*.psd filter=lfs diff=lfs merge=lfs -text
+experiment/data/martial/prj/*.prj filter=lfs diff=lfs merge=lfs -text
