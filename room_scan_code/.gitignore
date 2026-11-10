@@ -1,0 +1,8 @@
+data/*
+!data/README.md
+results/
+paperfigs/
+__pycache__/
+*.pyc
+room_wave_750Hz.gif
+room_flux_3d_viewer.html

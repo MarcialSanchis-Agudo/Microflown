@@ -1,0 +1,25 @@
+{
+ "description": "Rigid transform from the probe-tracking frame of the Scan&Paint 3D export to the analysis frame: x_frame = R x_raw + t. z normal to the plane through the lowest 10 percent of probe positions, x along the dominant intensity direction, origin at the point of maximum pressure at 750 Hz (Microflown oriented export). Least-squares fit, residual 3.2e-12 m.",
+ "R": [
+  [
+   0.16206617761618064,
+   0.9867603921372043,
+   0.006203433090747842
+  ],
+  [
+   -0.9864824801589388,
+   0.1618597956585684,
+   0.025568005179048402
+  ],
+  [
+   0.024225408404193995,
+   -0.01026328692950006,
+   0.9996538373502365
+  ]
+ ],
+ "t": [
+  -4.556620841200037,
+  -0.9876528148012098,
+  -0.9680086836585416
+ ]
+}
