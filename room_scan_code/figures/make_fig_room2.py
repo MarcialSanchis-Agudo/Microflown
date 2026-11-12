@@ -54,14 +54,14 @@ def arr(x0, y0, x1, y1):
     ax.annotate('', xy=(x1, y1), xytext=(x0, y0), arrowprops=dict(arrowstyle='-|>', lw=1.0, color='0.2'))
 C1, C2, C3 = '#e8eef9', '#fbeee6', '#eaf4ee'
 bx(1, 17, 18, 18, '1  Acquisition', 'hand-held probe, tracked\n$p,\\,u_x,u_y,u_z$ per 2 cm cell\ntransfer function\nto a fixed reference\ncoherence, dwell time', C1)
-bx(22, 17, 18, 18, '2a  Noise detection', 'four features vs the\n11 nearest neighbours:\nmagnitude, phase,\ncorrelation, impedance\ntop 5 % per channel', C1)
-bx(43, 17, 18, 18, '2b  Reconstruction', 'local $j_\\ell Y_\\ell^m$ fit, 96 points,\ndwell weights (Eq. 4); or\njoint $p$, $\\mathbf{u}$ Gaussian process\nwith error bars (Eqs. 5-7)', C1)
-bx(64, 17, 16, 18, '3  Energy flux', '$\\mathbf{I}=\\frac{1}{2}\\mathrm{Re}(p\\,\\mathbf{u}^*)$\n$\\mathbf{u}=-\\mathbf{u}_{\\rm stored}$\nflux-line intersection\npoints $>0.2$ m from origin\n(Eq. 8)', C1)
+bx(22, 17, 18, 18, '2a  Noise detection', 'four features vs the\n11 nearest neighbours:\nmagnitude, phase,\ncorrelation, impedance\ntop 5 % per channel\n(Eq. 12)', C1)
+bx(43, 17, 18, 18, '2b  Reconstruction', 'local $j_\\ell Y_\\ell^m$ fit, 96 points,\ndwell weights (Eq. 4); or\njoint $p$, $\\mathbf{u}$ Gaussian process\nwith error bars (Eqs. 5-9)', C1)
+bx(64, 17, 16, 18, '3  Energy flux', '$\\mathbf{I}=\\frac{1}{2}\\mathrm{Re}(p\\,\\mathbf{u}^*)$\n$\\mathbf{u}=-\\mathbf{u}_{\\rm stored}$\nflux-line intersection\npoints $>0.2$ m from origin\n(Eq. 10)', C1)
 bx(83, 17, 16, 18, '4  Outputs', 'maps of $p$, $\\mathbf{I}$\nsource position\ndirectivity\n(balloons, polar cuts)', C1)
 for x0 in (19.5, 40.5, 61.5, 80.5): arr(x0, 26, x0 + 2.0, 26)
 bx(1, 1.5, 30, 12.5, 'Validation (Sec. 4)', 'exterior $h^{(1)}_\\ell Y_\\ell^m$: monopole, dipole\ninterior fit and joint process:\nexact fields at the real positions', C3)
 bx(34, 1.5, 32, 12.5, 'Checks on the data (Sec. 5)', 'reference-pair scatter (1); split-half error (2b)\nEuler consistency of $p$ and $\\mathbf{u}$ (2b)\nrandom-direction null (3);\nheld-out calibration of error bars (2b)', C2)
-bx(69, 1.5, 30, 12.5, 'Design rule for acquisition (Sec. 6)', 'averages per cell for a target error\n(Eq. 9)  $\\rightarrow$  maximum sweep speed', C2)
+bx(69, 1.5, 30, 12.5, 'Design rule for acquisition (Sec. 6)', 'averages per cell for a target error\n(Eq. 11)  $\\rightarrow$  maximum sweep speed', C2)
 fig.savefig('paperfigs/fig_pipeline.pdf'); fig.savefig('results/fig_pipeline_preview.png', dpi=130); plt.close(fig)
 
 # ════════════════════════════════════════════════════════════ interior validation
