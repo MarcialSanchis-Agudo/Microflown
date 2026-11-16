@@ -9,7 +9,7 @@ S=h5().dataset(G+'SampleCellMatrix').astype(np.int64)
 seg=S[4]-S[3]; cells=S[0]*10**8+S[1]*10**4+S[2]; _,cnt=np.unique(cells,return_counts=True)
 print(f"segments {S.shape[1]}, cells {len(cnt)}; segments per cell: 1 -> {np.mean(cnt==1)*100:.0f}%, >=2 -> {np.mean(cnt>=2)*100:.0f}%")
 print(f"segment length [samples @48 kHz]: median {np.median(seg):.0f} ({np.median(seg)/48000:.3f} s), p10 {np.percentile(seg,10):.0f}, p90 {np.percentile(seg,90):.0f}")
-print(f"=> 2048-pt blocks per segment (no overlap): median {np.median(seg)/2048:.1f}")
+print(f"=> segment length in 2048-pt blocks: median {np.median(seg)/2048:.1f} (blocks overlap by 50 %, see verify_room_overlap.py)")
 rng=np.random.default_rng(2)
 print(f"\n{'f':>7} {'kept med coh':>12} | {'complex err':>11} {'|p| err':>8} {'phase err':>9} | err by coh: <0.5 / 0.5-0.8 / >=0.8 | k*2cm")
 for f0 in (257.8125,492.1875,750.0,1007.8125,1242.1875):

@@ -58,22 +58,28 @@ S.source(a); a.set_xlabel('$x$ [m]'); a.set_ylabel('$y$ [m]'); S.tag(a, 'a')
 S.cbar(R.fig, sc, R.add_cbar(), r'dwell [ms]', ticks=[np.log10(v) for v in (50, 100, 200, 500)]).set_ticklabels(['50', '100', '200', '500'])
 R.gap(0.95)
 b = R.add_plot(1.85)
-nn = np.logspace(0, np.log10(40), 60); gg = np.median(g2r[nb >= 1.5])
-nn = np.logspace(0, np.log10(12), 60)
-b.loglog(nn, 100 * 1.177 * np.sqrt((1 - gg) / (nn * gg)), color='0.35', lw=1.0, ls='--', label=r'ratio model, $\sqrt{2}\,\epsilon_{\rm med}$')
+# averages: 2048-sample blocks every 1024 samples (50 % overlap, detected from the data in
+# analysis/verify_room_overlap.py); Hann window assumed: n_eff = K / (1 + 2 (K-1)/K * 0.0278).
+# Model per dwell quintile (K > 1), with that quintile's median n_eff and inter-reference coherence.
+KK = np.floor(2 * nb - 1 + 1e-9); NE = KK / (1 + 2 * (KK - 1) / KK * 0.0278)
+pm = []
+for a_, b_ in zip(edges[1:-1], edges[2:]):
+    m_ = (nb >= a_) & (nb <= b_); g_ = np.median(g2r[m_]); pm.append(1.177 * np.sqrt((1 - g_) / (np.median(NE[m_]) * g_)))
+print("[noise] ratio model per quintile (2-5):", np.round(pm, 3))
+b.loglog(mid[1:], 100 * np.array(pm), 'x--', color='0.35', lw=1.0, ms=4.5, label=r'ratio model, $\sqrt{2}\,\epsilon_{\rm med}$')
 b.loglog(mid[1:], 100 * s_obs[1:], 'o', color=S.BLUE, ms=4.5, label='reference pair')
 b.loglog(mid[:1], 100 * s_obs[:1], 'o', mfc='white', mec=S.BLUE, ms=4.5, label='ref. pair, ~1 block')
 b.loglog(mid, 100 * e_obs, 's', color=S.ORANGE, ms=4.5, label='probe pressure')
-b.set_xlim(0.9, 12); b.set_ylim(1.5, 200); b.set_xlabel('FFT blocks per cell'); b.set_ylabel('median relative error [%]')
+b.set_xlim(0.9, 12); b.set_ylim(1.5, 200); b.set_xlabel('recorded length [blocks]'); b.set_ylabel('median relative error [%]')
 b.grid(color='0.9', lw=0.5, which='major'); b.legend(frameon=False, loc='lower center', fontsize=6.0, ncol=2, columnspacing=0.5, handlelength=1.0, handletextpad=0.4); S.tag(b, 'b', x=0.84)
 R.gap(0.66)
 c = R.add_plot(R.W - R.x - 0.30)
 c.hist(nb, bins=np.logspace(0, np.log10(60), 30), color=S.GREY)
 c.set_xscale('log'); c.axvline(np.median(nb), color='k', lw=1.0)
-for nreq, lab_ in ((7.7, r'$\gamma^2{=}0.9$'), (29.7, r'$\gamma^2{=}0.7$')):
+for nreq, lab_ in ((5.0, r'$\gamma^2{=}0.9$'), (16.5, r'$\gamma^2{=}0.7$')):
     c.axvline(nreq, color=S.RED, lw=0.9, ls='--'); c.text(nreq * 0.92, c.get_ylim()[1] * 0.97, lab_, fontsize=7.5, color=S.RED, va='top', ha='right', rotation=90)
-c.set_xlabel('FFT blocks per cell'); c.set_ylabel('number of cells'); S.tag(c, 'c', x=0.80)
-print(f"[noise] cells with < 1.5 blocks: {np.mean(nb < 1.5) * 100:.0f}%; >= 7.7 blocks: {np.mean(nb >= 7.7) * 100:.1f}%; >= 29.7: {np.mean(nb >= 29.7) * 100:.1f}%")
+c.set_xlabel('length [blocks]'); c.set_ylabel('number of cells'); S.tag(c, 'c', x=0.80)
+print(f"[noise] cells with < 1.5 blocks (one average): {np.mean(nb < 1.5) * 100:.0f}%; >= 5.0 blocks: {np.mean(nb >= 5.0) * 100:.1f}%; >= 16.5: {np.mean(nb >= 16.5) * 100:.1f}%")
 R.save('paperfigs/fig_room_noise.pdf', 'results/fig_room_noise_preview.png')
 
 # ════════════════════════════════════════════════════════════ Fig: reconstruction

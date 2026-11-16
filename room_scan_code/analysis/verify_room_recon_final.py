@@ -3,7 +3,9 @@
 weighted 0): (1) neighbourhood radius; (2) bias on a known room-like field at the real positions;
 (3) residual random error by split-half (two random halves, 96 neighbours each, |pA-pB|/sqrt2);
 (4) raw node error by the same split-half construction with 1 neighbour-free comparison
-(held-out local prediction, from verify_room_noise_model.py); (5) averaging needed for a target error."""
+(held-out local prediction, from verify_room_noise_model.py); (5) averaging needed for a target error,
+counting blocks WITHOUT overlap (superseded: the paper's rule, with the 50 % overlap found in the data, is in
+verify_room_overlap.py)."""
 import sys, numpy as np; sys.path.insert(0,'lib')
 from room_stage2 import local_recon, dwell_blocks
 from room_raw import raw, frame_transform
@@ -23,5 +25,5 @@ e=np.abs(pa-pb)/np.sqrt(2)/np.abs(0.5*(pa+pb)); print(f"(3) residual random erro
 for g2 in (0.7,0.9):
     for et in (0.1,0.2):
         n=1.177**2*(1-g2)/(2*g2*et**2); T=n*2048/48000
-        print(f"(5) coherence {g2}, target {et*100:.0f}%: n = {n:.1f} blocks = {T:.2f} s per cell -> sweep <= {0.02/T*100:.1f} cm/s for 2 cm cells")
+        print(f"(5) [no-overlap count, superseded by verify_room_overlap.py] coherence {g2}, target {et*100:.0f}%: n = {n:.1f} blocks = {T:.2f} s per cell -> sweep <= {0.02/T*100:.1f} cm/s for 2 cm cells")
 print(f"    achieved: median dwell {np.median(nb)*2048/48000:.3f} s per cell = {0.02/(np.median(nb)*2048/48000)*100:.0f} cm/s")

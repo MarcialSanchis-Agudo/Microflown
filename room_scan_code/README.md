@@ -54,6 +54,9 @@ every random draw has a fixed seed.
 | Sec. 2.5, Eq. 10 | energy flux, flux-line intersection | `analysis/run_room_pipeline.py` |
 | Sec. 2.2, Eqs. 2–3 | exterior spherical-harmonic expansion | `lib/mf_pipeline/mf_directivity.py` |
 | Sec. 2.6, Eq. 11 | random error vs averages, reference-pair test | `analysis/verify_room_refpair.py`, `verify_room_noise_model.py` |
+| Secs. 2.6, 5.2, 6 | 50 % overlap from the data, effective averages, sweep-speed rule | `analysis/verify_room_overlap.py` |
+| Sec. 5.5 | what the GP error bars and split-half error do and do not show | `analysis/verify_room_gp_accuracy.py` |
+| Sec. 5.7 | sensitivity of the near-field balloons to the origin | `analysis/verify_room_balloon_origin.py` |
 | — | reading the HDF5 export without h5py | `lib/mini_h5.py`, `lib/room_raw.py` |
 | — | analysis frame (rigid transform of the probe positions) | `lib/frame.json` |
 
@@ -74,8 +77,10 @@ pressure and velocity, and averages per point. Specific to this data set:
 
 The export stores transfer functions in the e^{+iωt} convention, with the velocity sign inverted relative to
 the pressure; the physical flux is I = −½ Re(p u*_stored) (paper, Sec. 2.5). Pressure and velocity are transfer
-functions to the first reference sensor, so levels are relative. Averages per cell are counted as recorded
-samples / 2048 (no overlap assumed; the export does not record the averaging scheme).
+functions to the first reference sensor, so levels are relative. The dwell of a cell is stored
+as recorded samples / 2048 ("blocks"). The data show that the export averages 2048-sample blocks with 50 % overlap
+(cells shorter than 1.5 blocks report a coherence of exactly one), so a cell of L blocks holds floor(2L-1) averages;
+the window is not recorded and a Hann window is assumed where it matters (`analysis/verify_room_overlap.py`).
 
 ## Licence and data
 

@@ -25,6 +25,9 @@ for f in $F; do echo "== run_room_pipeline $f"; "$PY" -u analysis/run_room_pipel
 run analysis/verify_room_noise_model.py
 run analysis/verify_room_dwell.py
 run analysis/verify_room_refpair.py 750 _750
+run analysis/verify_room_overlap.py 750
+run analysis/verify_room_weights.py
+run analysis/verify_room_geometry.py
 L=results/verify_room_refpair_allf.log; : > $L
 for f in 257.8125 492.1875 1007.8125 1242.1875; do
   "$PY" -u analysis/verify_room_refpair.py $f > results/_tmp.log || fail "verify_room_refpair $f" results/_tmp.log
@@ -34,12 +37,14 @@ for s in verify_room_recon verify_room_recon_final verify_room_recon_physics ver
 run analysis/verify_room_gp_synthetic.py
 for f in $F; do run analysis/run_room_gp.py $f _$("$PY" -c "print(int(round($f)))"); done
 run analysis/verify_room_gp_noise_model.py
+for f in $F; do run analysis/verify_room_gp_accuracy.py $f _$("$PY" -c "print(int(round($f)))"); done
 run analysis/run_gp_stack.py
 # 5. energy flux, directivity, registration (Secs. 5.6-5.8)
 run analysis/verify_room_localise_null.py
 L=results/verify_room_polar.log; : > $L
 for f in 492.1875 750 1007.8125 1242.1875; do "$PY" -u analysis/verify_room_polar.py $f >> $L || fail "verify_room_polar $f" $L; done; cat $L
 run analysis/verify_room_balloon.py 30
+run analysis/verify_room_balloon_origin.py
 run analysis/verify_room_mesh_alignment.py
 run analysis/verify_room_mesh_frame.py
 # 6. figures, animation, interactive viewer
